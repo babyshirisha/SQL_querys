@@ -1,0 +1,89 @@
+Create database SqlQuery;
+
+create table SqlQuery.empTable 
+(
+EmployeeID int NOT NULL AUTO_INCREMENT,
+Employee_Name varchar(255),
+Phone_number varchar(255),
+Address varchar(255),
+Department varchar(255),
+Gender char(1),
+salary float,
+PRIMARY KEY (EmployeeID)
+);
+
+insert into SqlQuery.empTable (
+Employee_Name, 
+Phone_number,
+Address, 
+Department, 
+Gender, 
+salary) values ('bindu','1244548870','mumbai','IT', 'F','49000.0');
+
+select * from SqlQuery.empTable where Employee_Name = 'siri';
+
+select salary as salary from SqlQuery.empTable;
+
+alter table SqlQuery.empTable rename column salary_of_emp to salary;
+
+create table SqlQuery.salary as select EmployeeID,Employee_Name,salary from SqlQuery.empTable;
+
+describe salary;
+
+select * from SqlQuery.salary;
+
+update SqlQuery.empTable set salary = '35000' where Employee_Name = 'siri';
+
+select sum(salary) from SqlQuery.empTable where Gender = 'F' group by Gender;
+
+select count(*) from SqlQuery.empTable group by Gender;
+
+select avg(salary) from SqlQuery.empTable where Gender = 'F' group by Gender;
+
+select min(salary) from SqlQuery.empTable where Gender = 'F' group by Gender;
+
+select max(salary) from SqlQuery.empTable where Gender = 'F' group by Gender;
+
+select * from SqlQuery.empTable order by salary desc;
+
+create view view1 as select Employee_Name,Department from empTable where Address = "pune";
+
+select * from view1;
+
+select * from SqlQuery.empTable where Address = "hyderabad" AND Department = "IT";
+
+Select * from SqlQuery.empTable where Address = "America" OR Department = "IT";
+
+select * from SqlQuery.empTable limit 2;
+select * from SqlQuery.empTable where Address in ('Pune','Mumbai');
+select * from SqlQuery.empTable where salary between 35000 AND 41000;
+select EmployeeID as Id, Employee_Name as Name from SqlQuery.empTable;
+
+
+
+create table SqlQuery.Orders(OrderId int Not Null, CustomerId int, OrderDate date);
+create table  SqlQuery.Customers(CustomerId int Not Null, CustomerName varchar(255), country varchar(255),Mobile varchar(10));
+
+create table SqlQuery.emp(id int,name varchar(100),Address varchar(100));
+insert into SqlQuery.emp(id, name, Address) select EmployeeID, Employee_Name from SqlQuery.empTable where Address = 'hyderabad';
+select * from SqlQuery.emp;
+
+SELECT * FROM employeedetails.Orders;
+insert into SqlQuery.Orders(OrderId,CustomerId,OrderDate) values('10308','3','2022-04-09');
+insert into SqlQuery.Orders(OrderId,CustomerId,OrderDate) values('10309','1','2022-05-05');
+insert into SqlQuery.Orders(OrderId,CustomerId,OrderDate) values('10310','5','2022-06-03');
+
+SELECT OrderID FROM SqlQuery.Orders UNION SELECT CustomerName FROM SqlQuery.Customers;
+
+SELECT * FROM SqlQuery.Customers;
+use employeedetails;
+
+insert into SqlQuery.Customers(CustomerId,CustomerName,country,Mobile) values('1','gayatri','India','9908742590');
+insert into SqlQuery.Customers(CustomerId,CustomerName,country,Mobile) values('2','sirisha','India','9098456560');
+insert into Customers(CustomerId,CustomerName,country,Mobile) values('3','mahesh','India','9098781234');
+
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate FROM Orders 
+INNER JOIN SqlQuery.Customers ON Orders.CustomerID=Customers.CustomerID;
+
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate FROM Orders 
+LEFT JOIN SqlQuery.Customers ON Orders.CustomerID=Customers.CustomerID;
